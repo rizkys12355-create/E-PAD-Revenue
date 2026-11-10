@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System E-PAD - PT SUCOFINDO</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-[#0f172a] text-white px-6 py-4 flex items-center justify-between shadow-md border-b border-cyan-500">
+        <div class="flex items-center space-x-3">
+            <div class="bg-cyan-500 p-2 rounded-lg text-slate-900">
+                <span class="material-icons text-2xl font-bold">digital_transformation</span>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold tracking-tight flex items-center">
+                    E-PAD <span class="text-xs bg-cyan-400 text-slate-900 font-semibold px-2 py-0.5 rounded ml-2">PROTOTYPE SYSTEM</span>
+                </h1>
+                <p class="text-xs text-slate-400">Digitalisasi Pengakuan Pendapatan yang Akan Diterima • PT SUCOFINDO</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-6">
+            <div class="text-right hidden md:block">
+                <p class="text-xs text-slate-400">Cabang Pengaju</p>
+                <p class="text-sm font-semibold">Bandung Branch (SERCO)</p>
+            </div>
+            <div class="h-8 w-px bg-slate-700"></div>
+            <div class="flex items-center space-x-2">
+                <div class="bg-cyan-900 text-cyan-300 w-10 h-10 rounded-full flex items-center justify-center font-bold border border-cyan-700">
+                    BDG
+                </div>
+                <span class="material-icons text-slate-400 cursor-pointer hover:text-white">keyboard_arrow_down</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-[#1e293b] text-slate-300 flex flex-col justify-between hidden lg:flex">
+            <div class="p-4 space-y-6">
+                <div>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">MENU UTAMA</p>
+                    <nav class="space-y-1">
+                        <button onclick="switchTab('dashboard')" id="btn-dashboard" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-cyan-600 text-white font-medium transition">
+                            <span class="material-icons text-sm">dashboard</span>
+                            <span>Dashboard Monitoring</span>
+                        </button>
+                        <button onclick="switchTab('alur')" id="btn-alur" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition">
+                            <span class="material-icons text-sm">schema</span>
+                            <span>Alur Proses Bisnis</span>
+                        </button>
+                        <button onclick="switchTab('simulasi')" id="btn-simulasi" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition">
+                            <span class="material-icons text-sm">history</span>
+                            <span>Siklus Auto-Reverse</span>
+                        </button>
+                        <button onclick="switchTab('approval')" id="btn-approval" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition">
+                            <span class="material-icons text-sm">draw</span>
+                            <span>Digital Approval</span>
+                        </button>
+                    </nav>
+                </div>
+
+                <div class="border-t border-slate-800 pt-4">
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">PROYEK AKTIF (BIOFARMA)</p>
+                    <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-700/50">
+                        <p class="text-xs text-cyan-400 font-semibold mb-1">Audit Energi Serco</p>
+                        <p class="text-[11px] text-slate-400">IDR 205,000,000</p>
+                        <div class="mt-2 w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-cyan-400 h-full w-[100%]"></div>
+                        </div>
+                        <div class="flex justify-between items-center mt-1 text-[9px] text-slate-500">
+                            <span>Selesai 100%</span>
+                            <span>Umur: 10 Bulan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Sidebar -->
+            <div class="p-4 bg-slate-900 text-xs text-slate-500 border-t border-slate-800 text-center">
+                <p>System E-PAD v1.0.0</p>
+                <p class="text-[10px] text-cyan-500 mt-1">ID Survey & Sucofindo © 2026</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Panel -->
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
+
+            <!-- TAB 1: DASHBOARD MONITORING -->
+            <div id="tab-dashboard" class="space-y-6">
+                <!-- Top Headline Info -->
+                <div class="bg-gradient-to-r from-blue-900 to-slate-900 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
+                    <div class="absolute right-0 bottom-0 opacity-10 pointer-events-none">
+                        <span class="material-icons text-[200px]">eco</span>
+                    </div>
+                    <div class="max-w-2xl">
+                        <span class="bg-cyan-500/20 text-cyan-300 text-xs px-3 py-1 rounded-full font-semibold border border-cyan-500/30">Dukungan Go-Green & Efisiensi</span>
+                        <h2 class="text-2xl font-bold mt-3">Selamat Tinggal Kertas & Pengulangan Cetak Bulanan</h2>
+                        <p class="text-slate-300 text-sm mt-2 leading-relaxed">
+                            System E-PAD mengeliminasi kebutuhan cetak berkas proforma, pakta integritas, dan form persetujuan yang sebelumnya harus dicetak fisik tiap kali PAD terkena siklus <b>Auto-Reverse</b> bulanan. Kini semua berjalan otomatis via digital signature.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Metric Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center space-x-4">
+                        <div class="bg-emerald-100 text-emerald-600 p-3 rounded-xl">
+                            <span class="material-icons text-3xl">forest</span>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-semibold uppercase">Kertas Dihemat</p>
+                            <h3 class="text-2xl font-bold text-slate-800">4,250 Lembar</h3>
+                            <p class="text-[10px] text-emerald-500 mt-1 font-medium">↑ Setara 8.5 Rim Kertas</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center space-x-4">
+                        <div class="bg-cyan-100 text-cyan-600 p-3 rounded-xl">
+                            <span class="material-icons text-3xl">hourglass_empty</span>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-semibold uppercase">Waktu Pengurusan</p>
+                            <h3 class="text-2xl font-bold text-slate-800">1 Hari Kerja</h3>
+                            <p class="text-[10px] text-cyan-500 mt-1 font-medium">↓ Sebelumnya rata-rata 10-14 Hari</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center space-x-4">
+                        <div class="bg-amber-100 text-amber-600 p-3 rounded-xl">
+                            <span class="material-icons text-3xl">cached</span>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-semibold uppercase">Auto-Roll Forward</p>
+                            <h3 class="text-2xl font-bold text-slate-800">Otomatis</h3>
+                            <p class="text-[10px] text-slate-500 mt-1 font-medium">Tanpa input data ulang</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center space-x-4">
+                        <div class="bg-blue-100 text-blue-600 p-3 rounded-xl">
+                            <span class="material-icons text-3xl">task_alt</span>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-semibold uppercase">Approval Direksi</p>
+                            <h3 class="text-2xl font-bold text-slate-800">E-Signature</h3>
+                            <p class="text-[10px] text-blue-500 mt-1 font-medium">Sudah Terintegrasi DIRKMR</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study Showcase: Biofarma Audit Energi -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800">Sampel Studi Kasus Proyek Aktif</h3>
+                            <p class="text-xs text-slate-500">Berdasarkan berkas asli: 41010125000812 - BIOFARMA AUDIT ENERGI - SERCO.pdf</p>
+                        </div>
+                        <span class="text-xs bg-amber-100 text-amber-700 font-semibold px-3 py-1 rounded-full">Umur PAD: 10 Bulan (> 6 Bulan)</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-slate-50 p-4 rounded-xl space-y-2">
+                            <p class="text-xs text-slate-400">Identitas Pelanggan & Jasa</p>
+                            <p class="text-sm font-semibold text-slate-700">PT Bio Farma (Persero)</p>
+                            <p class="text-xs text-slate-500">Jasa Konsultan Audit Energi</p>
+                            <div class="h-px bg-slate-200 my-2"></div>
+                            <p class="text-[11px] text-slate-400">No. Kontrak:</p>
+                            <p class="text-xs font-mono text-slate-600">005.16/PGD/VI/2025</p>
+                        </div>
+
+                        <div class="bg-slate-50 p-4 rounded-xl space-y-2">
+                            <p class="text-xs text-slate-400">Financial Value</p>
+                            <p class="text-sm font-semibold text-emerald-600">IDR 205.000.000,00</p>
+                            <p class="text-xs text-slate-500">Progres Kerja: 100% Selesai</p>
+                            <div class="h-px bg-slate-200 my-2"></div>
+                            <p class="text-[11px] text-slate-400">Keterangan Progres:</p>
+                            <p class="text-xs text-slate-600">Laporan selesai, sedang revisi laporan akhir & verifikasi BAST.</p>
+                        </div>
+
+                        <div class="bg-slate-50 p-4 rounded-xl flex flex-col justify-between">
+                            <div>
+                                <p class="text-xs text-slate-400">Status Otorisasi Terkini</p>
+                                <div class="flex items-center space-x-2 mt-2">
+                                    <span class="w-3 h-3 bg-amber-500 rounded-full animate-ping"></span>
+                                    <span class="text-xs font-bold text-amber-600">MENUNGGU APPROVAL DIRKMR</span>
+                                </div>
+                            </div>
+                            <button onclick="switchTab('approval')" class="mt-4 bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-semibold py-2 px-4 rounded-lg w-full transition text-center">
+                                Lihat Konsol Approval Digital
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: ALUR PROSES BISNIS -->
+            <div id="tab-alur" class="space-y-6 hidden">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between border-b border-slate-200 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Alur Pengesahan Proses Bisnis PAD</h2>
+                        <p class="text-xs text-slate-500">Perbandingan Aturan Otorisasi Berdasarkan Umur PAD</p>
+                    </div>
+                    <div class="flex space-x-2 mt-4 md:mt-0">
+                        <button onclick="toggleFlow(6)" id="btn-flow-under" class="px-4 py-2 text-xs font-bold rounded-lg bg-cyan-600 text-white transition">
+                            < 6 Bulan (Sederhana)
+                        </button>
+                        <button onclick="toggleFlow(12)" id="btn-flow-over" class="px-4 py-2 text-xs font-bold rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300 transition">
+                            > 6 Bulan (Kompleks)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Flow Visualizer Block -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Left: Flow Diagram Graphic -->
+                    <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                        <h3 class="text-sm font-bold text-slate-700 mb-6 flex items-center">
+                            <span class="material-icons text-cyan-500 mr-2">route</span>
+                            Visualisasi Alur Digital (Referensi WhatsApp Image)
+                        </h3>
+
+                        <!-- Interactive Diagram -->
+                        <div class="space-y-4 max-w-md mx-auto" id="flowchart-container">
+                            <!-- Node 1 -->
+                            <div class="flex items-center justify-between p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50/50">
+                                <div class="flex items-center space-x-3">
+                                    <span class="bg-emerald-500 text-white p-1.5 rounded-lg text-xs font-bold">01</span>
+                                    <div>
+                                        <p class="text-xs text-slate-400">Inisiasi</p>
+                                        <p class="text-sm font-bold text-slate-700">Cabang Bandung</p>
+                                    </div>
+                                </div>
+                                <span class="material-icons text-emerald-500">check_circle</span>
+                            </div>
+
+                            <div class="text-center"><span class="material-icons text-slate-300">arrow_downward</span></div>
+
+                            <!-- Node 2 -->
+                            <div class="flex items-center justify-between p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50/50">
+                                <div class="flex items-center space-x-3">
+                                    <span class="bg-emerald-500 text-white p-1.5 rounded-lg text-xs font-bold">02</span>
+                                    <div>
+                                        <p class="text-xs text-slate-400">Verifikasi Kelengkapan Dokumen</p>
+                                        <p class="text-sm font-bold text-slate-700">Officer Regional Barat</p>
+                                    </div>
+                                </div>
+                                <span class="material-icons text-emerald-500">check_circle</span>
+                            </div>
+
+                            <div class="text-center"><span class="material-icons text-slate-300">arrow_downward</span></div>
+
+                            <!-- Node 3 -->
+                            <div class="flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-slate-50">
+                                <div class="flex items-center space-x-3">
+                                    <span class="bg-slate-500 text-white p-1.5 rounded-lg text-xs font-bold">03</span>
+                                    <div>
+                                        <p class="text-xs text-slate-400">Paraf Pengendalian</p>
+                                        <p class="text-sm font-bold text-slate-700">Kabag Pengendalian Adm & Keu</p>
+                                    </div>
+                                </div>
+                                <span class="material-icons text-slate-400">pending</span>
+                            </div>
+
+                            <div class="text-center"><span class="material-icons text-slate-300">arrow_downward</span></div>
+
+                            <!-- Node 4 -->
+                            <div class="flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-slate-50">
+                                <div class="flex items-center space-x-3">
+                                    <span class="bg-slate-500 text-white p-1.5 rounded-lg text-xs font-bold">04</span>
+                                    <div>
+                                        <p class="text-xs text-slate-400">Approval Wilayah</p>
+                                        <p class="text-sm font-bold text-slate-700">Ka. Divre Barat</p>
+                                    </div>
+                                </div>
+                                <span class="material-icons text-slate-400">pending</span>
+                            </div>
+
+                            <!-- Dynamic Additional Nodes for > 6 Months -->
+                            <div id="extended-nodes" class="space-y-4 hidden mt-4">
+                                <div class="text-center"><span class="material-icons text-slate-300">arrow_downward</span></div>
+                                <div class="flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-slate-50">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="bg-slate-500 text-white p-1.5 rounded-lg text-xs font-bold">05</span>
+                                        <div>
+                                            <p class="text-xs text-slate-400">Approval Direktur Bisnis</p>
+                                            <p class="text-sm font-bold text-slate-700">Direktur Terkait (Ops/Komersil)</p>
+                                        </div>
+                                    </div>
+                                    <span class="material-icons text-slate-400">pending</span>
+                                </div>
+
+                                <div class="text-center"><span class="material-icons text-slate-300">arrow_downward</span></div>
+                                <div class="flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-slate-50">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="bg-slate-500 text-white p-1.5 rounded-lg text-xs font-bold">06</span>
+                                        <div>
+                                            <p class="text-xs text-slate-400">Verifikasi Kebijakan PSAK 72</p>
+                                            <p class="text-sm font-bold text-slate-700">Paraf KAK & Direktur Keuangan DIRKMR</p>
+                                        </div>
+                                    </div>
+                                    <span class="material-icons text-slate-400">pending</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Required Document List (From WhatsApp Images) -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
+                        <h3 class="text-sm font-bold text-slate-700 mb-2">Checklist Dokumen Lampiran Pengajuan</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            System E-PAD secara otomatis melampirkan berkas dari database server kontrak pusat, memotong proses upload berkas yang sama setiap bulan.
+                        </p>
+
+                        <!-- Checklist Items Container -->
+                        <div class="space-y-3" id="checklist-docs">
+                            <!-- Items under 6 months -->
+                            <div class="flex items-start space-x-2 text-xs">
+                                <span class="material-icons text-emerald-500 text-sm mt-0.5">check_circle</span>
+                                <div>
+                                    <p class="font-semibold text-slate-700">1. Pelaporan PAD (Formulir)</p>
+                                    <p class="text-[10px] text-slate-400">Otomatis digenerate sistem</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-2 text-xs">
+                                <span class="material-icons text-emerald-500 text-sm mt-0.5">check_circle</span>
+                                <div>
+                                    <p class="font-semibold text-slate-700">2. Perhitungan JS Pekerjaan yang Telah Diselesaikan</p>
+                                    <p class="text-[10px] text-slate-400">Diambil dari progress report operasional</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-2 text-xs">
+                                <span class="material-icons text-emerald-500 text-sm mt-0.5">check_circle</span>
+                                <div>
+                                    <p class="font-semibold text-slate-700">3. BAST (Draft/Final)</p>
+                                    <p class="text-[10px] text-slate-400">File PDF BAST Biofarma Terlampir</p>
+                                </div>
+                            </div>
+
+                            <!-- Extended items for over 6 months -->
+                            <div id="extended-docs" class="space-y-3 hidden pt-3 border-t border-slate-100">
+                                <div class="flex items-start space-x-2 text-xs">
+                                    <span class="material-icons text-emerald-500 text-sm mt-0.5">check_circle</span>
+                                    <div>
+                                        <p class="font-semibold text-slate-700">4. Komitmen Pembayaran Pelanggan</p>
+                                        <p class="text-[10px] text-slate-400">Surat resmi kesanggupan dari PT Biofarma</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-2 text-xs">
+                                    <span class="material-icons text-emerald-500 text-sm mt-0.5">check_circle</span>
+                                    <div>
+                                        <p class="font-semibold text-slate-700">5. Assessment PSAK 72</p>
+                                        <p class="text-[10px] text-slate-400">Kesesuaian prinsip pengakuan pendapatan</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-2 text-xs">
+                                    <span class="material-icons text-emerald-500 text-sm mt-0.5">check_circle</span>
+                                    <div>
+                                        <p class="font-semibold text-slate-700">6. Pakta Integritas</p>
+                                        <p class="text-[10px] text-slate-400">Tanda Tangan Kancab, Kabid Dukbis, & Kabid Pengujian</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: SIKLUS AUTO-REVERSE -->
+            <div id="tab-simulasi" class="space-y-6 hidden">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-xl font-bold text-slate-800">Visualisasi Siklus Akuntansi: PAD vs Reverse (CM)</h2>
+                    <p class="text-xs text-slate-500">Membantu memahami bagaimana sistem menangani transaksi akrual bulanan</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Left: Explanation of Reversal -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
+                        <h3 class="text-sm font-bold text-slate-700">Kenapa Selalu Di-Reverse Tiap Bulan?</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Di PT Sucofindo, performa pendapatan cabang harus diakui saat tutup buku bulanan agar target operasional tercapai (<b>Penerbitan PAD</b>). 
+                        </p>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Namun, di awal bulan berikutnya, sistem akuntansi ERP akan langsung menerbitkan <b>Credit Memo (CM)</b> atau <b>Reverse PAD</b>. Tindakan ini wajib dilakukan agar saat Invoice Asli diterbitkan nanti, pendapatan tidak tercatat ganda.
+                        </p>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            <b>Masalahnya:</b> Tanpa E-PAD, setiap siklus Reverse & Pengajuan Ulang ini mengharuskan Cabang mengulang proses pengisian, persetujuan fisik, dan cetak kertas dari nol.
+                        </p>
+                        <div class="p-3 bg-cyan-50 rounded-xl border border-cyan-100">
+                            <p class="text-xs font-bold text-cyan-800 flex items-center">
+                                <span class="material-icons text-sm mr-1">bolt</span> Solusi E-PAD:
+                            </p>
+                            <p class="text-[11px] text-cyan-700 mt-1">
+                                Sistem melakukan <b>Auto-Roll Forward</b>. Jika belum disetujui, sistem akan menyalin data bulan lalu ke pengajuan bulan baru secara otomatis. Cabang hanya perlu klik 1 tombol tanpa perlu print lembaran baru.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right: Interactive Reversal History (Mapped from page 3 of PDF/Images) -->
+                    <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-bold text-slate-700">Histori Real-time Transaksi PAD (Biofarma)</h3>
+                            <button onclick="simulateRollForward()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-1.5 px-3 rounded-lg transition flex items-center">
+                                <span class="material-icons text-sm mr-1">sync</span> Simulasikan Roll-Forward Bulanan
+                            </button>
+                        </div>
+
+                        <div class="overflow-x-auto custom-scrollbar">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider">
+                                    <tr>
+                                        <th class="p-3">Periode</th>
+                                        <th class="p-3">Nomor Dokumen</th>
+                                        <th class="p-3">Tipe Transaksi</th>
+                                        <th class="p-3 text-right">Nilai Transaksi (IDR)</th>
+                                        <th class="p-3">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100" id="reversal-table-body">
+                                    <!-- Dynamic Rows matching PDF page 3 -->
+                                    <tr class="hover:bg-slate-50/50">
+                                        <td class="p-3 font-medium">Mei 2026</td>
+                                        <td class="p-3 font-mono">PAD41012601158</td>
+                                        <td class="p-3"><span class="text-emerald-600 font-semibold">Penerbitan PAD</span></td>
+                                        <td class="p-3 text-right font-semibold text-emerald-600">205,000,000</td>
+                                        <td class="p-3"><span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[10px] font-semibold">Aktif</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50/50">
+                                        <td class="p-3 font-medium">Awal Mei 2026</td>
+                                        <td class="p-3 font-mono">CM PAD41012601158</td>
+                                        <td class="p-3"><span class="text-rose-600 font-semibold">Reverse PAD</span></td>
+                                        <td class="p-3 text-right font-semibold text-rose-600">-205,000,000</td>
+                                        <td class="p-3"><span class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded text-[10px] font-semibold">Di-reverse</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50/50">
+                                        <td class="p-3 font-medium">April 2026</td>
+                                        <td class="p-3 font-mono">PAD41012600858</td>
+                                        <td class="p-3"><span class="text-emerald-600 font-semibold">Penerbitan PAD</span></td>
+                                        <td class="p-3 text-right font-semibold text-emerald-600">205,000,000</td>
+                                        <td class="p-3"><span class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded text-[10px] font-semibold">Di-reverse</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50/50 text-slate-400">
+                                        <td class="p-3 font-medium">Awal April 2026</td>
+                                        <td class="p-3 font-mono">CM PAD41012600858</td>
+                                        <td class="p-3"><span>Reverse PAD</span></td>
+                                        <td class="p-3 text-right font-semibold">-205,000,000</td>
+                                        <td class="p-3"><span class="bg-slate-100 text-slate-500 px-2 py-0.5 rounded text-[10px]">Arsip</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: DIGITAL APPROVAL MATRIX -->
+            <div id="tab-approval" class="space-y-6 hidden">
+                <div class="border-b border-slate-200 pb-4 flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">E-Approval & E-Signature Desk</h2>
+                        <p class="text-xs text-slate-500">Hilangkan tanda tangan fisik kertas secara berjenjang</p>
+                    </div>
+                    <span class="text-xs font-mono text-cyan-600 bg-cyan-100 px-3 py-1 rounded-full mt-2 md:mt-0">Ref Dokumen No: 1828/BDG-V/SERCO/2026</span>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Left Column: The Form View (Simulated PDF form on screen) -->
+                    <div class="lg:col-span-2 bg-white p-6 rounded-2xl border-2 border-slate-200 shadow-md space-y-4 relative">
+                        <!-- PT Sucofindo Logo & Title Header -->
+                        <div class="flex justify-between items-start border-b border-slate-200 pb-4">
+                            <div>
+                                <h3 class="text-base font-bold text-slate-800 tracking-wide uppercase">FORMULIR PERMINTAAN PEMBUKAAN PAD</h3>
+                                <p class="text-[10px] text-slate-400">UMUR PENDAPATAN AKAN DITERIMA LEBIH DARI 6 BULAN</p>
+                            </div>
+                            <div class="text-right text-xs">
+                                <p class="font-bold">SUCOFINDO</p>
+                                <p class="text-[9px] text-slate-400 font-mono">FOR/SCI-KAK/044 Rev 04</p>
+                            </div>
+                        </div>
+
+                        <!-- Form Fields Grid -->
+                        <div class="grid grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <label class="block text-slate-400 text-[10px] uppercase font-bold">Tanggal Pengajuan</label>
+                                <p class="font-semibold text-slate-700 p-2 bg-slate-50 rounded mt-1">25 Mei 2026</p>
+                            </div>
+                            <div>
+                                <label class="block text-slate-400 text-[10px] uppercase font-bold">No. Surat</label>
+                                <p class="font-semibold text-slate-700 p-2 bg-slate-50 rounded mt-1">1828/BDG-V/SERCO/2026</p>
+                            </div>
+                            <div>
+                                <label class="block text-slate-400 text-[10px] uppercase font-bold">Nama Pelanggan</label>
+                                <p class="font-semibold text-slate-700 p-2 bg-slate-50 rounded mt-1">PT Biofarma (Persero)</p>
+                            </div>
+                            <div>
+                                <label class="block text-slate-400 text-[10px] uppercase font-bold">Nilai PAD</label>
+                                <p class="font-semibold text-slate-700 p-2 bg-slate-50 rounded mt-1">IDR 205.000.000,00</p>
+                            </div>
+                            <div>
+                                <label class="block text-slate-400 text-[10px] uppercase font-bold">Umur PAD</label>
+                                <p class="font-semibold text-slate-700 p-2 bg-slate-50 rounded mt-1">10 Bulan</p>
+                            </div>
+                            <div>
+                                <label class="block text-slate-400 text-[10px] uppercase font-bold">Jasa Pekerjaan</label>
+                                <p class="font-semibold text-slate-700 p-2 bg-slate-50 rounded mt-1">Jasa Konsultan Audit Energi</p>
+                            </div>
+                        </div>
+
+                        <!-- Reasons Block -->
+                        <div class="text-xs">
+                            <label class="block text-slate-400 text-[10px] uppercase font-bold">Alasan Usulan Pembukaan PAD</label>
+                            <p class="p-3 bg-slate-50 rounded mt-1 text-slate-600 leading-relaxed">
+                                Proses revisi lanjutan pada laporan final & pembuatan BAST oleh tim Biofarma sedang berjalan. Komitmen penerbitan Invoice ditargetkan pada <b>Juli 2026</b>.
+                            </p>
+                        </div>
+
+                        <!-- Signature Boxes (Digital parafs from the PDF) -->
+                        <div class="border-t border-slate-200 pt-4">
+                            <p class="text-xs text-slate-400 font-semibold mb-3">Tanda Tangan Digital Tersertifikasi (E-Paraf)</p>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                                <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                                    <p class="text-[9px] text-slate-400 font-bold">PEMOHON (KACAB)</p>
+                                    <div class="h-12 flex items-center justify-center font-mono text-xs text-emerald-600 font-bold" id="sig-kacab">
+                                        <span class="material-icons mr-1">verified</span> Leonardo P.
+                                    </div>
+                                    <p class="text-[10px] font-bold text-slate-700">Leonardo Pardede</p>
+                                    <p class="text-[8px] text-slate-400">Pgs Kepala Cabang Bandung</p>
+                                </div>
+
+                                <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                                    <p class="text-[9px] text-slate-400 font-bold">DIREKTUR OPS</p>
+                                    <div class="h-12 flex items-center justify-center text-slate-400" id="sig-dirops">
+                                        <button onclick="approveStep('dirops')" class="bg-cyan-600 hover:bg-cyan-700 text-white text-[10px] font-bold px-2 py-1 rounded transition">Tanda Tangan</button>
+                                    </div>
+                                    <p class="text-[10px] font-bold text-slate-700">Dani Pramantyo</p>
+                                    <p class="text-[8px] text-slate-400">Direktur Operasi</p>
+                                </div>
+
+                                <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                                    <p class="text-[9px] text-slate-400 font-bold">DIVISI KEUANGAN (PUSAT)</p>
+                                    <div class="h-12 flex items-center justify-center text-slate-400" id="sig-divkeu">
+                                        <button onclick="approveStep('divkeu')" class="bg-cyan-600 hover:bg-cyan-700 text-white text-[10px] font-bold px-2 py-1 rounded transition">Tanda Tangan</button>
+                                    </div>
+                                    <p class="text-[10px] font-bold text-slate-700">Putri Rahayu A.</p>
+                                    <p class="text-[8px] text-slate-400">Pj. Kepala Div. Keuangan</p>
+                                </div>
+
+                                <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                                    <p class="text-[9px] text-slate-400 font-bold">DIREKTUR KEUANGAN</p>
+                                    <div class="h-12 flex items-center justify-center text-slate-400" id="sig-dirkeu">
+                                        <button onclick="approveStep('dirkeu')" class="bg-cyan-600 hover:bg-cyan-700 text-white text-[10px] font-bold px-2 py-1 rounded transition">Tanda Tangan</button>
+                                    </div>
+                                    <p class="text-[10px] font-bold text-slate-700">David Sidjabat</p>
+                                    <p class="text-[8px] text-slate-400">Direktur Keuangan (DIRKMR)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: System Action Tracker -->
+                    <div class="bg-[#0f172a] text-white p-6 rounded-2xl shadow-lg space-y-6">
+                        <div>
+                            <h3 class="text-sm font-bold text-cyan-400 uppercase tracking-wider">Log Tracker Audit</h3>
+                            <p class="text-xs text-slate-400 mt-1">Status dan rekam jejak pengesahan digital</p>
+                        </div>
+
+                        <!-- System Logs Area -->
+                        <div class="space-y-4 text-xs" id="log-container">
+                            <div class="flex items-start space-x-3">
+                                <div class="bg-emerald-500/20 text-emerald-400 p-1.5 rounded-full mt-0.5">
+                                    <span class="material-icons text-sm">done</span>
+                                </div>
+                                <div>
+                                    <p class="font-bold">Formulir Disubmit Cabang</p>
+                                    <p class="text-slate-400 text-[10px]">Oleh: Leonardo Pardede (25 Mei 2026 09:30)</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-3">
+                                <div class="bg-amber-500/20 text-amber-400 p-1.5 rounded-full mt-0.5">
+                                    <span class="material-icons text-sm animate-spin">rotate_right</span>
+                                </div>
+                                <div>
+                                    <p class="font-bold">Menunggu Persetujuan Direktur Operasi</p>
+                                    <p class="text-slate-400 text-[10px]">Notifikasi WA/Email telah terkirim</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-slate-800 pt-4 space-y-3">
+                            <h4 class="text-xs font-bold text-slate-300">Aksi Simulasi Demo:</h4>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="quickApproveAll()" class="bg-cyan-600 hover:bg-cyan-700 text-white text-[10px] font-bold py-2 px-3 rounded-lg transition">
+                                    Setujui Semua Instan
+                                </button>
+                                <button onclick="resetApprovalDemo()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] font-bold py-2 px-3 rounded-lg transition border border-slate-700">
+                                    Reset Simulasi
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Interactive Client Script -->
+    <script>
+        // Tab Navigation Logic
+        function switchTab(tabId) {
+            // Hide all tab containers
+            document.getElementById('tab-dashboard').classList.add('hidden');
+            document.getElementById('tab-alur').classList.add('hidden');
+            document.getElementById('tab-simulasi').classList.add('hidden');
+            document.getElementById('tab-approval').classList.add('hidden');
+
+            // Show targets
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            // Reset all side buttons
+            const buttons = ['dashboard', 'alur', 'simulasi', 'approval'];
+            buttons.forEach(btn => {
+                const buttonEl = document.getElementById(`btn-${btn}`);
+                buttonEl.classList.remove('bg-cyan-600', 'text-white', 'font-medium');
+                buttonEl.classList.add('hover:bg-slate-800', 'text-slate-400', 'hover:text-white');
+            });
+
+            // Set current active side button
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.classList.add('bg-cyan-600', 'text-white', 'font-medium');
+            activeBtn.classList.remove('hover:bg-slate-800', 'text-slate-400', 'hover:text-white');
+        }
+
+        // Alur Proses Bisnis Toggle Flowchart Type
+        function toggleFlow(months) {
+            const extendedNodes = document.getElementById('extended-nodes');
+            const extendedDocs = document.getElementById('extended-docs');
+            const btnUnder = document.getElementById('btn-flow-under');
+            const btnOver = document.getElementById('btn-flow-over');
+
+            if (months === 12) {
+                extendedNodes.classList.remove('hidden');
+                extendedDocs.classList.remove('hidden');
+                btnOver.classList.add('bg-cyan-600', 'text-white');
+                btnOver.classList.remove('bg-slate-200', 'text-slate-700');
+                btnUnder.classList.remove('bg-cyan-600', 'text-white');
+                btnUnder.classList.add('bg-slate-200', 'text-slate-700');
+            } else {
+                extendedNodes.classList.add('hidden');
+                extendedDocs.classList.add('hidden');
+                btnUnder.classList.add('bg-cyan-600', 'text-white');
+                btnUnder.classList.remove('bg-slate-200', 'text-slate-700');
+                btnOver.classList.remove('bg-cyan-600', 'text-white');
+                btnOver.classList.add('bg-slate-200', 'text-slate-700');
+            }
+        }
+
+        // Auto-reversal simulation history
+        function simulateRollForward() {
+            const tableBody = document.getElementById('reversal-table-body');
+            const randomID = Math.floor(100000 + Math.random() * 900000);
+            
+            // Create rows for a new month simulation
+            const newPADRow = `
+                <tr class="hover:bg-slate-50/50 bg-cyan-50/30 transition duration-500">
+                    <td class="p-3 font-medium">Juni 2026</td>
+                    <td class="p-3 font-mono text-cyan-600 font-semibold">PAD4101260${randomID}</td>
+                    <td class="p-3"><span class="text-cyan-600 font-semibold">Penerbitan PAD (Auto-Roll)</span></td>
+                    <td class="p-3 text-right font-semibold text-cyan-600">205,000,000</td>
+                    <td class="p-3"><span class="bg-cyan-100 text-cyan-700 px-2 py-0.5 rounded text-[10px] font-semibold">Aktif Baru</span></td>
+                </tr>
+            `;
+
+            const previousReverseRow = `
+                <tr class="hover:bg-slate-50/50 bg-rose-50/20 transition duration-500">
+                    <td class="p-3 font-medium">Awal Juni 2026</td>
+                    <td class="p-3 font-mono">CM PAD41012601158</td>
+                    <td class="p-3"><span class="text-rose-600 font-semibold">Reverse PAD Otomatis</span></td>
+                    <td class="p-3 text-right font-semibold text-rose-600">-205,000,000</td>
+                    <td class="p-3"><span class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded text-[10px] font-semibold">Di-reverse</span></td>
+                </tr>
+            `;
+
+            // Insert at the beginning of table
+            tableBody.insertAdjacentHTML('afterbegin', newPADRow);
+            tableBody.insertAdjacentHTML('afterbegin', previousReverseRow);
+        }
+
+        // Digital approval steps
+        function approveStep(step) {
+            const sigBox = document.getElementById(`sig-${step}`);
+            const logContainer = document.getElementById('log-container');
+
+            let signatoryName = "";
+            let roleName = "";
+
+            if (step === 'dirops') {
+                signatoryName = "Dani Pramantyo";
+                roleName = "Direktur Operasi";
+            } else if (step === 'divkeu') {
+                signatoryName = "Putri Rahayu A.";
+                roleName = "Pj. Kepala Div. Keuangan";
+            } else if (step === 'dirkeu') {
+                signatoryName = "David Sidjabat";
+                roleName = "Direktur Keuangan (DIRKMR)";
+            }
+
+            sigBox.innerHTML = `
+                <span class="material-icons mr-1 text-emerald-600">verified</span>
+                <span class="font-mono text-xs text-emerald-600 font-bold">${signatoryName}</span>
+            `;
+
+            const logEntry = `
+                <div class="flex items-start space-x-3 transition duration-500 animate-pulse">
+                    <div class="bg-emerald-500/20 text-emerald-400 p-1.5 rounded-full mt-0.5">
+                        <span class="material-icons text-sm">done</span>
+                    </div>
+                    <div>
+                        <p class="font-bold">E-Signature Terverifikasi</p>
+                        <p class="text-slate-400 text-[10px]">Oleh: ${signatoryName} (${roleName})</p>
+                    </div>
+                </div>
+            `;
+            logContainer.insertAdjacentHTML('beforeend', logEntry);
+        }
+
+        // Quick Approve All
+        function quickApproveAll() {
+            approveStep('dirops');
+            setTimeout(() => approveStep('divkeu'), 200);
+            setTimeout(() => approveStep('dirkeu'), 400);
+        }
+
+        // Reset demo state
+        function resetApprovalDemo() {
+            document.getElementById('sig-dirops').innerHTML = `
+                <button onclick="approveStep('dirops')" class="bg-cyan-600 hover:bg-cyan-700 text-white text-[10px] font-bold px-2 py-1 rounded transition">Tanda Tangan</button>
+            `;
+            document.getElementById('sig-divkeu').innerHTML = `
+                <button onclick="approveStep('divkeu')" class="bg-cyan-600 hover:bg-cyan-700 text-white text-[10px] font-bold px-2 py-1 rounded transition">Tanda Tangan</button>
+            `;
+            document.getElementById('sig-dirkeu').innerHTML = `
+                <button onclick="approveStep('dirkeu')" class="bg-cyan-600 hover:bg-cyan-700 text-white text-[10px] font-bold px-2 py-1 rounded transition">Tanda Tangan</button>
+            `;
+            document.getElementById('log-container').innerHTML = `
+                <div class="flex items-start space-x-3">
+                    <div class="bg-emerald-500/20 text-emerald-400 p-1.5 rounded-full mt-0.5">
+                        <span class="material-icons text-sm">done</span>
+                    </div>
+                    <div>
+                        <p class="font-bold">Formulir Disubmit Cabang</p>
+                        <p class="text-slate-400 text-[10px]">Oleh: Leonardo Pardede (25 Mei 2026 09:30)</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                    <div class="bg-amber-500/20 text-amber-400 p-1.5 rounded-full mt-0.5">
+                        <span class="material-icons text-sm animate-spin">rotate_right</span>
+                    </div>
+                    <div>
+                        <p class="font-bold">Menunggu Persetujuan Direktur Operasi</p>
+                        <p class="text-slate-400 text-[10px]">Notifikasi WA/Email telah terkirim</p>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
+```
+eof
+
+---
+
+### Penjelasan Konsep Sistem E-PAD untuk Manajemen
+
+Anda dapat menggunakan materi di bawah ini sebagai draf proposal atau bahan presentasi (*pitching*) saat memamerkan aplikasi prototype di atas ke Kepala Bidang, Kepala Divre, atau Kepala Divisi Keuangan Pusat PT Sucofindo:
+
+#### 1. Latar Belakang Masalah (The Pain Point)
+* **Aturan Akrual vs Realita Proyek:** Pendapatan jasa (seperti *Audit Energi PT Biofarma*) harus diakui tiap akhir bulan untuk performa bulanan cabang, padahal BAST belum ditandatangani oleh pelanggan.
+* **Siklus Auto-Reverse Wajib:** Di awal bulan baru, sistem akuntansi melakukan *Auto-Reverse* (menggunakan *Credit Memo*) untuk mencegah pencatatan ganda.
+* **Inkonsistensi Birokrasi Fisik:** Masalah muncul ketika PAD sudah berusia **di atas 6 bulan**. Aturan internal mengharuskan pengajuan ulang bulanan disetujui hingga tingkat Direktur Keuangan pusat. Tanpa sistem terpadu, Cabang Bandung harus **mencetak berkas fisik yang sama berulang kali setiap bulan** hanya untuk diperbaharui tanda tangan basahnya.
+
+#### 2. Solusi Melalui System E-PAD
+* **Auto-Roll Forward:** Jika suatu proyek belum terbit *invoice*-nya tetapi pekerjaannya sudah disetujui, sistem di bulan baru akan otomatis menduplikasi (*roll-forward*) draf PAD bulan lalu beserta seluruh lampirannya (seperti Pakta Integritas, Formulir KAK, Assessment PSAK 72). **Tidak perlu entri ulang, tidak perlu mencetak berkas fisik.**
+* **Digital Signature & Multi-Level Workflows:** Persetujuan dokumen bergeser dari tanda tangan kertas basah menjadi **E-Paraf / E-Signature** berjenjang:
+  $$\text{Cabang Bandung} \rightarrow \text{Officer Regbar} \rightarrow \text{Kabid Pengendalian} \rightarrow \text{Ka. Divre Barat} \rightarrow \text{Direktur Ops} \rightarrow \text{DIRKMR (Direktur Keuangan)}$$
+* **Notifikasi Instan via Email/WhatsApp:** Begitu sistem melakukan *roll-forward* bulanan, email notifikasi persetujuan langsung terkirim otomatis ke kotak masuk para Direktur. Mereka bisa menyetujui langsung melalui ponsel tanpa harus menunggu berkas fisik dikirim lewat kurir.
+
+#### 3. Keuntungan Finansial & Operasional
+* **Zero Paper Waste:** Menghemat hingga ribuan lembar kertas cetakan per tahun untuk puluhan proyek bernasib sama di seluruh Indonesia.
+* **SLA Pengurusan Terpangkas:** Dari yang semula memakan waktu **10-14 hari** (kirim berkas fisik antarkota) menjadi kurang dari **1 hari kerja**.
+* **Keakuratan Audit Internal:** Menghilangkan risiko berkas tercecer atau hilangnya bukti pakta integritas saat audit internal/eksternal.
+
+Silakan klik tombol **Preview** pada panel kanan layar Anda untuk menguji dan berinteraksi langsung dengan simulasi **System E-PAD** yang telah saya buat!
